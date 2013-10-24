@@ -36,8 +36,12 @@ var ns = module.exports = function(fns, mode) {
 ns.bound = function(fns){
   this._validateArgs(fns)
 
-  var head = fns[0], rest = fns.slice(1), recurse = ns.bound.bind(this)
-  if (1 === fns.length) return head.bind(null)
+  var head = fns[0]
+    , rest = fns.slice(1)
+    , recurse = this.bound.bind(this)
+    , done = this.done
+
+  if (1 === fns.length) return head.bind({ next: done })
   return head.bind({ next: recurse(rest) })
 }
 
@@ -48,13 +52,20 @@ ns.bound = function(fns){
 ns.arg = function(fns) {
   this._validateArgs(fns)
 
-  var head = fns[0], rest = fns.slice(1), recurse = ns.arg.bind(this)
+  var head = fns[0]
+    , rest = fns.slice(1)
+    , recurse = this.arg.bind(this)
+    , done = this.done
+
   if (0 === rest.length)
-    return function() { head.bind(null,null).apply(null,arguments) }
+    return function() { head.bind(null,done).apply(null,arguments) }
   return function() {
     head.bind(null,recurse(rest)).apply(null,arguments)
   }
 }
+
+// The value of "next" for the last function in the chain
+ns.done = function(){}
 
 // Args must be a non-empty array
 ns._validateArgs = function(fns) {
