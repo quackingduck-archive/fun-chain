@@ -1,0 +1,14 @@
+{
+  "name": "fun-chain",
+  "description": "Chain together a list of functions",
+  "version": "0.1.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/quackingduck/fun-chain.git"
+  },
+  "author": {
+    "name": "Myles Byrne",
+    "email": "myles@myles.id.au"
+  },
+  "license": "MIT"
+}
