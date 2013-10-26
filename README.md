@@ -32,4 +32,4 @@ function notFound(res) {
 
 ```
 
-It's like connect but without all the code
+It's like [connect](https://github.com/senchalabs/connect) but without all the code
